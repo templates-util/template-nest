@@ -13,6 +13,59 @@ services:
       - '5432:5432'
     volumes:
       - db-data:/var/lib/postgresql/data
+    networks:
+      - monitoring
+  
+  storage:
+    build: ./s3
+    container_name: s3
+    ports:
+      - 9000:9000
+    networks:
+      - monitoring
+  
+  prometheus:
+      image: prom/prometheus:latest
+      container_name: prometheus
+      volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      command:
+        - '--config.file=/etc/prometheus/prometheus.yml'
+      ports:
+        - 9090:9090
+      networks:
+      - monitoring
+      environment:
+        - APP_HOST=app:5000
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - 3100:3000
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring
+  app:
+    build: .
+    container_name: app
+    restart: unless-stopped
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db
+      - storage
+      - prometheus
+      - grafana
+    networks:
+      - monitoring
+    environment:
+      - AWS_S3_ENDPOINT=http://storage:9000/s3
+      - TYPEORM_HOST=db
 
 volumes:
   db-data:
+  grafana-data:
+networks:
+  monitoring:
+    driver: bridge

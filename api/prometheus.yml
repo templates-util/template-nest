@@ -1,0 +1,11 @@
+global:
+  scrape_interval: 15s # Define o intervalo de coleta padrão
+  evaluation_interval: 15s # Define o intervalo de avaliação padrão
+
+scrape_configs:
+  - job_name: 'api' # Nome do trabalho de coleta
+    scrape_interval: 5s # Intervalo de coleta específico para este trabalho
+    static_configs:
+      - targets: ['app:5000'] # Use o valor da variável de ambiente
+        labels:
+          group: 'api'
