@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmHealthIndicator } from '@nestjs/terminus';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { Arquivo } from './models/arquivo.entity';
@@ -19,6 +20,7 @@ dotenv.config();
       entities: [User, Arquivo],
     }),
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, TypeOrmHealthIndicator],
+  providers: [TypeOrmHealthIndicator],
 })
 export class DatabaseModule {}

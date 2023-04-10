@@ -1,73 +1,49 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# NestJS Project - Transactions and Users Management
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project aims to create a NestJS-based application that handles user management, CRUD operations for AWS S3, and transaction file processing.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- User management (authentication, registration, and CRUD operations)
+- Transaction file submission and processing
+- AWS S3 integration for file storage
+- Docker-compose based services setup (PostgreSQL, S3, Prometheus, Grafana, Redis)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Docker Compose Configuration
 
-## Installation
+The `docker-compose.yml` file provided in the project sets up the following services:
 
-```bash
-$ npm install
-```
+1. **db**: PostgreSQL database for data persistence.
+2. **storage**: Custom S3 storage service for file uploads.
+3. **prometheus**: Prometheus service for monitoring and alerting.
+4. **grafana**: Grafana service for data visualization and analytics.
+5. **redis**: Redis service for caching and session management.
+6. **app**: The main NestJS application.
 
-## Running the app
+## How to run the project
 
-```bash
-# development
-$ npm run start
+1. Make sure you have Docker and Docker Compose installed on your machine.
+2. Clone the project repository.
+3. Open a terminal and navigate to the project directory.
+4. Run `docker-compose up -d` to start the services.
+5. The NestJS application will be accessible at `http://localhost:5000`.
 
-# watch mode
-$ npm run start:dev
+## Environment Variables
 
-# production mode
-$ npm run start:prod
-```
+The following environment variables are used by the NestJS application:
 
-## Test
+- `AWS_S3_ENDPOINT`: The endpoint URL for the custom S3 storage service (default: `http://storage:9000/s3`)
+- `TYPEORM_HOST`: The hostname for the PostgreSQL database (default: `db`)
+- `REDIS_HOST`: The hostname for the Redis service (default: `redis`)
+- `API_PORT`: The port on which the NestJS application runs (default: `5000`)
 
-```bash
-# unit tests
-$ npm run test
+## Project Structure
 
-# e2e tests
-$ npm run test:e2e
+The project consists of several modules, controllers, and services to handle the different functionalities:
 
-# test coverage
-$ npm run test:cov
-```
+- User management is handled by the `AuthModule`, `UserModule`, and their respective controllers and services.
+- Transaction file submission and processing are managed by the `TransactionModule`, `TransactionController`, and `TransactionService`.
+- AWS S3 integration is implemented in the `S3Module` and `S3Service`.
 
-## Support
+Feel free to explore the codebase for a better understanding of the project's structure and implementation.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).

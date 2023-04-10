@@ -1,15 +1,19 @@
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
 import { AppModule } from './app.module';
-
+import { WinstonLogger } from './winston-logger.service';
 dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
 
+  const configService = app.get(ConfigService);
+  const logger = new WinstonLogger(configService);
+  app.useLogger(logger);
   app.enableCors({
     origin: '*',
     allowedHeaders:
@@ -27,6 +31,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
-  await app.listen(5000);
+  await app.listen(parseInt(process.env.API_PORT) || 5000);
 }
 bootstrap();

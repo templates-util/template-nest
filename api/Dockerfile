@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Defina as variáveis de ambiente necessárias para o seu aplicativo
-ENV PORT=5000
+ENV PORT=7000
 
 # Exponha a porta necessária para o seu aplicativo
 EXPOSE ${PORT}

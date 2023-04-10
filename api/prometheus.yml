@@ -6,6 +6,6 @@ scrape_configs:
   - job_name: 'api' # Nome do trabalho de coleta
     scrape_interval: 5s # Intervalo de coleta específico para este trabalho
     static_configs:
-      - targets: ['app:5000'] # Use o valor da variável de ambiente
+      - targets: ['app:7000'] # Use o valor da variável de ambiente
         labels:
           group: 'api'
