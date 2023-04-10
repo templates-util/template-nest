@@ -1,6 +1,8 @@
 import {
   DeleteObjectCommand,
   GetObjectCommand,
+  ListBucketsCommand,
+  ListBucketsOutput,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -177,10 +179,8 @@ export class S3Service {
       throw new HttpException('Arquivo já excluído', HttpStatus.BAD_REQUEST);
     }
 
-    // Deletar o arquivo antigo do S3
     await this.deleteFileFromS3(arquivo.nomeDoArquivo);
 
-    // Atualizar o arquivo no S3 e no banco de dados
     return await this.updateFile(arquivo, file);
   }
 
@@ -196,5 +196,10 @@ export class S3Service {
 
   async getArquivoById(id: number): Promise<Arquivo> {
     return await this.arquivoRepository.findOne({ where: { id } });
+  }
+
+  async listBuckets(): Promise<ListBucketsOutput> {
+    const command = new ListBucketsCommand({});
+    return await this.s3.send(command);
   }
 }

@@ -72,6 +72,8 @@ services:
       - AWS_S3_ENDPOINT=http://storage:9000/s3
       - TYPEORM_HOST=db
       - REDIS_HOST=redis
+      - ELASTICSEARCH_NODE=http://elasticsearch:9200
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     container_name: elasticsearch
