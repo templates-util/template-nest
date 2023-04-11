@@ -1,25 +1,9 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { BaseEntity } from './base.entity';
 import { User } from './user.entity';
 
 @Entity('arquivos')
-export class Arquivo {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @CreateDateColumn({ name: 'data_criacao' })
-  dataCriacao: Date;
-
-  @UpdateDateColumn({ name: 'data_update' })
-  dataUpdate: Date;
-
+export class Arquivo extends BaseEntity {
   @Column({ name: 'nome_do_arquivo', length: 255 })
   nomeDoArquivo: string;
 

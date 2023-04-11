@@ -1,35 +1,24 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  Unique,
-  UpdateDateColumn,
-} from 'typeorm';
+import { IsEmail, IsNotEmpty } from 'class-validator';
+import { Column, Entity, Unique } from 'typeorm';
+import { BaseEntity } from './base.entity';
 
 @Entity('users')
 @Unique(['email'])
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends BaseEntity {
   @Column({ length: 255 })
+  @IsNotEmpty()
   name: string;
 
   @Column({ length: 255 })
+  @IsNotEmpty()
   username: string;
 
   @Column({ unique: true, length: 255 })
+  @IsEmail()
   email: string;
 
   @Column({ name: 'hash_password', length: 255 })
   hashPassword: string;
-
-  @CreateDateColumn({ name: 'data_criacao' })
-  dataCriacao: Date;
-
-  @UpdateDateColumn({ name: 'data_update' })
-  dataUpdate: Date;
 
   @Column({ default: true })
   ativo: boolean;
