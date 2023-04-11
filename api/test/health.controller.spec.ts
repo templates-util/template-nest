@@ -15,7 +15,6 @@ dotenv.config();
 describe('HealthController', () => {
   let controller: HealthController;
   let service: HealthService;
-  let s3Service: S3Service;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
