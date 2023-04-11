@@ -44,7 +44,7 @@ jobs:
           ${{ runner.os }}-node-
 
     - name: Start Docker services
-      run: docker-compose up -d
+      run: docker-compose -f docker-compose.test.yml up -d
       working-directory: api
 
     - name: Install dependencies
