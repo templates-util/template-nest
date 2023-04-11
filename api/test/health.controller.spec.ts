@@ -9,6 +9,7 @@ import { HealthController } from '../src/health/health.controller';
 import { HealthModule } from '../src/health/health.module';
 import { HealthService } from '../src/health/health.service';
 import { Arquivo } from '../src/models/arquivo.entity';
+import { User } from '../src/models/user.entity';
 dotenv.config();
 
 describe('HealthController', () => {
@@ -31,7 +32,7 @@ describe('HealthController', () => {
           database: process.env.TYPEORM_DATABASE,
           synchronize: process.env.TYPEORM_SYNCHRONIZE === 'true',
           logging: process.env.TYPEORM_LOGGING === 'true',
-          entities: [Arquivo],
+          entities: [Arquivo, User],
         }),
       ],
       providers: [
