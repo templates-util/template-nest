@@ -22,12 +22,19 @@ jobs:
       matrix:
         node-version: [16.x]
 
+    services:
+      docker:
+        image: docker/compose:latest
+        options: --privileged --volume /var/run/docker.sock:/var/run/docker.sock
+        
     steps:
     - uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: Cache Node.js modules
       uses: actions/cache@v2
       with:
@@ -35,9 +42,15 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
+
+    - name: Start Docker services
+      run: docker-compose up -d
+      working-directory: api
+
     - name: Install dependencies
       run: npm install
       working-directory: api
+
     - name: Run tests
       run: npm run test
       working-directory: api

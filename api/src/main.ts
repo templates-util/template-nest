@@ -26,6 +26,7 @@ async function bootstrap() {
     .setDescription('Documentação da APi')
     .setVersion('1.0')
     .addTag('users')
+    .addTag('auth')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
